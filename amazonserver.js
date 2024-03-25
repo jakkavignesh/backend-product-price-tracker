@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const app = express();
 const port = 8080;
 
-const DB = "mongodb://localhost:27017/?directConnection=true";
+const DB = "mongodb+srv://jakkavignesh2002:jakkavignesh2002@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.connect(DB).then(() => {
     console.log("Connected to MongoDb");
   })
