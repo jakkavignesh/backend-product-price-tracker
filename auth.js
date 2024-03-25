@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const port = 5000;
+const amazonServer=require('./amazonserver.js');
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
@@ -83,6 +84,7 @@ registerSchema.methods.generateAuthToken = async function () {
 }
 
 const database = mongoose.model('userDetails', registerSchema);
+app.use('/amazon',amazonServer);
 
 app.post('/signup', async (req, res) => {
     const { name, email, password, cpassword } = req.body;
