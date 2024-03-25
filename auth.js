@@ -10,7 +10,7 @@ app.use(cors());
 app.use(express.json());
 const jwt = require('jsonwebtoken');
 
-const DB = 'mongodb+srv://jakkavignesh2002:jakkavignesh2002@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const DB = 'mongodb+srv://jakkavignesh2002:jakkavignesh@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 mongoose.connect(DB).then(() => {
     console.log("Connected to MongoDb");
 }).catch((err) => {
