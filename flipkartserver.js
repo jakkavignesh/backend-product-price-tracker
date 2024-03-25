@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer');
 const app = express.Router();
 const port = 7000;
 const cron = require('node-cron');
-const DB = "mongodb+srv://jakkavignesh2002:jakkavignesh2002@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const DB = "mongodb+srv://jakkavignesh2002:jakkavignesh@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.connect(DB).then(() => {
     console.log("Connected to MongoDb");
   })
