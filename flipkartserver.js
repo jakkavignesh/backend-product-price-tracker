@@ -3,7 +3,7 @@ const puppeteer = require("puppeteer");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const nodemailer = require('nodemailer');
-const app = express();
+const app = express.Router();
 const port = 7000;
 const cron = require('node-cron');
 const DB = "mongodb+srv://jakkavignesh2002:jakkavignesh2002@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -176,6 +176,8 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running at http://localhost:${port}`);
+// });
+
+module.exports=app;
