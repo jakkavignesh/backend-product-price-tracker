@@ -3,10 +3,11 @@ const puppeteer = require("puppeteer");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const nodemailer = require('nodemailer');
-const app = express.Router();
+const app = express();
 const port = 7000;
-const cron = require('node-cron');
-const DB = "mongodb+srv://jakkavignesh2002:jakkavignesh@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+
+const DB = "mongodb+srv://jakkavignesh2002:VigneshJakka@productpricetracker.6u0wkqb.mongodb.net/"
+
 mongoose.connect(DB).then(() => {
     console.log("Connected to MongoDb");
   })
@@ -43,7 +44,6 @@ let registerSchema = new mongoose.Schema({
     {
         productPlatform: {
             type: String,
-            // required: true,
         },
         productName: {
             type: String,
@@ -59,7 +59,6 @@ let registerSchema = new mongoose.Schema({
         },
         productURL: {
             type: String,
-            // required: true,
         },
         dateTime: {
           type: Date,
@@ -107,8 +106,6 @@ const sendEmail = async (email, scrapedData, url) => {
   }
 };
 
-// cron.schedule("* * * * *", sendEmail);
-
 app.post("/scrapeFlipkart", async (req, res) => {
   try {
     const { url, email } = req.body;
@@ -128,10 +125,10 @@ app.post("/scrapeFlipkart", async (req, res) => {
         return element ? element.textContent.trim() : 'N/A';
       };
 
-      let productName = getTextContent('.B_NuCI');
-      let productPriceStr = getTextContent('._30jeq3');
-      let productMrpStr = getTextContent('._3I9_wc');
-      let productRating = getTextContent('._3LWZlK');
+      let productName = getTextContent('.VU-ZEz');
+      let productPriceStr = getTextContent('.Nx9bqj');
+      let productMrpStr = getTextContent('.yRaY8j6');
+      let productRating = getTextContent('.XQDdHH');
 
       const productPrice = parseFloat(productPriceStr.replace(/[^\d.]/g, ''), 10) || 'N/A';
       const productMrp = parseFloat(productMrpStr.replace(/[^\d.]/g, ''), 10) || productPrice;
@@ -139,8 +136,6 @@ app.post("/scrapeFlipkart", async (req, res) => {
       const discount = Math.round(((productMrp - productPrice) / productMrp) * 100);
 
       console.log(productName, productPrice, productMrp, discount, productRating)
-      // Call the exposed sendEmail function to send an email with the scraped data
-      // window.sendEmail(productName, productPrice, productMrp, discount, productRating);
       return { productName, productPrice, productMrp, discount, productRating };
     });
     await sendEmail(email, scrapedData, url);
@@ -156,9 +151,7 @@ app.post("/scrapeFlipkart", async (req, res) => {
         productURL: url,
     });
     await userExists.save();
-    // res.json({ data: scrapedData });
     await browser.close();
-    // await sendEmail(email, scrapedData);
   } catch (error) {
     console.error("Error during scraping:", error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -167,6 +160,7 @@ app.post("/scrapeFlipkart", async (req, res) => {
 
 const database = mongoose.model("userDetails", registerSchema);
 app.get('/api/products', async (req, res) => {
+  let database = req.app.get('database');
   try {
     const products = await database.find();
     res.json(products);
@@ -176,8 +170,6 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
-// app.listen(port, () => {
-//   console.log(`Server running at http://localhost:${port}`);
-// });
-
-module.exports=app;
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
