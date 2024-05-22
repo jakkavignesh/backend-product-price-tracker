@@ -3,14 +3,13 @@ const app = express();
 const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 const port = 5000;
-const amazonServer=require('./amazonserver.js');
-const flipkartServer=require('./flipkartserver.js');
 const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 const jwt = require('jsonwebtoken');
 
-const DB = 'mongodb+srv://jakkavignesh2002:jakkavignesh@cluster0.3gfux4d.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const DB = "mongodb+srv://jakkavignesh2002:VigneshJakka@productpricetracker.6u0wkqb.mongodb.net/"
+
 mongoose.connect(DB).then(() => {
     console.log("Connected to MongoDb");
 }).catch((err) => {
@@ -85,8 +84,6 @@ registerSchema.methods.generateAuthToken = async function () {
 }
 
 const database = mongoose.model('userDetails', registerSchema);
-app.use('/amazon',amazonServer);
-app.use('/flipkart',flipkartServer);
 
 app.post('/signup', async (req, res) => {
     const { name, email, password, cpassword } = req.body;
@@ -131,6 +128,7 @@ app.post('/signin', async (req, res) => {
 })
 
 app.get('/getName', async (req, res) => {
+    let database = req.app.get('database');
     const userExists = await database.findOne({email: email});
     return res.json({name : userExists.name})
 })
