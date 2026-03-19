@@ -4,7 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const nodemailer = require('nodemailer');
 const app = express();
-const port = 8080;
+const port = 7000;
 
 const DB = "mongodb+srv://jakkavignesh2002:VigneshJakka@productpricetracker.6u0wkqb.mongodb.net/"
 
