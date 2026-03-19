@@ -85,6 +85,10 @@ registerSchema.methods.generateAuthToken = async function () {
 
 const database = mongoose.model('userDetails', registerSchema);
 
+app.get('/helloWorld', (req, res) => {
+    res.status(200).send("Hello World");
+})
+
 app.post('/signup', async (req, res) => {
     const { name, email, password, cpassword } = req.body;
     try {
